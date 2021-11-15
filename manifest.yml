@@ -1,0 +1,11 @@
+modules:
+  jira:issuePanel:
+    - key: forge-jira-app-hello-world-panel
+      function: main
+      title: This is Forge!
+      icon: https://developer.atlassian.com/platform/forge/images/icons/issue-panel-icon.svg
+  function:
+    - key: main
+      handler: index.run
+app:
+  id: ari:cloud:ecosystem::app/3270633e-5c04-42f0-9b5e-968d86cca8ed
