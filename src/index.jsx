@@ -1,5 +1,5 @@
 import ForgeUI, { render, Fragment, Text, IssuePanel, useProductContext, useState
-, Strong, User, Em } from '@forge/ui';
+, Strong, User, Em, Table, Head, Cell, Row } from '@forge/ui';
 import api, { route } from "@forge/api";
 
 const App = () => {
@@ -10,7 +10,23 @@ const App = () => {
 	if(comments.length > 0) {
 		lastComment = comments[comments.length-1]
 	}
-//	console.log(`Number of comments on this issue: ${comments.length}`);
+	let chItems = [];
+	for(let i=0;i<changes.length;i++){
+		let item = changes[i].items[0]
+		chItems.push(<Row>
+			        <Cell>
+			          <Text>{item.field}</Text>
+			        </Cell>
+			        <Cell>
+			          <Text>{item.fromString}</Text>
+			        </Cell>
+			        <Cell>
+			          <Text>{item['toString']}</Text>
+			        </Cell>
+			      </Row>
+			      )
+		//console.log(changes[i].items);
+	}
 
   	return (
 	    <Fragment>
@@ -19,14 +35,28 @@ const App = () => {
 		      </Text>
 		      {lastComment !== null ?
 
-		      	<Text>Last commented by {lastComment.author.displayName}:
-		      		<Em>"{lastComment.body.content[0].content[0].text}"</Em>
+		      	<Text>Last commented by <Strong>{lastComment.author.displayName}</Strong>: 
+		      		<Em> "{lastComment.body.content[0].content[0].text}"</Em>
 		      	</Text>
 		      	: null
 		      }
 		      <Text>
-		      	Changes done since issue creation: {changes.length}
+		      	<Strong>Changes done since issue creation:</Strong> {changes.length}
 		      </Text>
+		      <Table>
+			    <Head>
+			      <Cell>
+			        <Text>Field changed</Text>
+			      </Cell>
+			      <Cell>
+			        <Text>From</Text>
+			      </Cell>
+			      <Cell>
+			        <Text>To</Text>
+			      </Cell>
+			    </Head>
+			    {chItems}
+			  </Table>
 	    </Fragment>
 	);
 };
